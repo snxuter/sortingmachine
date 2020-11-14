@@ -1,0 +1,33 @@
+#include <Servo.h>
+
+Servo myServo;
+int angle = 40;
+const int sensorPin = A0; // PD input
+
+void setup() {
+  
+   Serial.begin(9600);  // Serial port 
+   myServo.attach(11);  // servo control output 
+   pinMode(13, OUTPUT); // motor control output
+   digitalWrite(13, HIGH);
+   myServo.write(20); // reset the laod cell position
+   delay(2000);
+}
+
+void loop() {
+
+   int sensorVal = analogRead(sensorPin);
+   Serial.print("Sensor Value: ");
+   Serial.print(sensorVal);
+   Serial.print("\n");
+   if (sensorVal < 1000) {
+    digitalWrite(13, LOW);
+    delay(2000);
+    myServo.write(angle);
+    delay(2000);
+    myServo.write(20);
+   }
+   digitalWrite(13, HIGH);
+   myServo.write(20);
+   delay(2000);
+}
